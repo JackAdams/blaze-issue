@@ -7,17 +7,20 @@
 </body>
 
 <template name="posts">
-  <h2 style="color:red;">Blaze issue example: (drag the comments to reorder -- then check the console -- then refresh the page)</h2>
+  <h2 style="color:red;">Blaze issue example: (drag the comments to reorder -- then check the console -- then refresh the page or click the "Re-render" button)</h2>
   <h3>This used to work as expected in Spark, but in Blaze the data displayed in the template doesn't match the data context after the update.</h3>
   <h3>Is this expected behaviour, because the "comments" template hasn't actually rerendered and the "comments.comments" helper is not reactive.<br />If so, why the redraw using the old data?</h3>
-  <ul id="posts-list">
-    {{#each posts}}
-      <li>
-        <strong>{{name}}</strong><br />
-        {{> comments}}
-      </li>
-    {{/each}}
-  </ul>
+  {{#if showPosts}}
+    <ul id="posts-list">
+      {{#each posts}}
+        <li>
+          <strong>{{name}}</strong><br />
+          {{> comments}}
+        </li>
+      {{/each}}
+    </ul>
+  {{/if}}
+  <button id="rerender">Re-render</button>
 </template>
 
 <template name="comments">

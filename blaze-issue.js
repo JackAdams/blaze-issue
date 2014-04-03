@@ -1,9 +1,25 @@
 Posts = new Meteor.Collection('posts');
 
 if (Meteor.isClient) {
-  Template.posts.posts = function () {
-    return Posts.find();
-  };
+  Session.set('showPosts',true);
+  
+  Template.posts.helpers({
+    posts : function() {
+      return Posts.find();
+    },
+    showPosts : function() {
+      return Session.get('showPosts');
+    }
+  });
+  
+  Template.posts.events({
+    'click #rerender' : function() {
+      Session.set('showPosts',false);
+      Deps.flush();
+      Session.set('showPosts',true);
+      console.log('Re-rendered');
+    }
+  });
 
   Template.comments.comments = function() {
     return _.sortBy(this.comments,function(comment){return comment.order});
